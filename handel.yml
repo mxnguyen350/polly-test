@@ -1,0 +1,8 @@
+version: 1
+name: mxnguyen-pollyapi
+environments:
+  dev: 
+    webapp:
+      type: beanstalk
+      path_to_code: api
+      solution_stack: 64bit Amazon Linux 2018.03 v4.5.3 running Node.js

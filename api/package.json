@@ -1,0 +1,16 @@
+{
+  "name": "pollyapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Michael Nguyen",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "aws-sdk": "^2.318.0",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3"
+  }
+}
