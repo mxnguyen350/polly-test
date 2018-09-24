@@ -10,7 +10,7 @@ app.get('/', async function (req, res) {
         const polly = new AWS.Polly({ apiVersion: '2016-06-10', region: 'us-west-2' });
         console.log(req.query)
         const params = {
-            OutputFormat: "mp3",
+            OutputFormat: req.query.format,
             SampleRate: "8000",
             Text: req.query.text,
             TextType: "text",
