@@ -3,23 +3,30 @@ const bodyParser = require('body-parser');
 const AWS = require('aws-sdk');
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded())
 
-app.post('/', async function(req, res) {
-    const polly = new AWS.Polly({apiVersion: '2016-06-10', region: 'us-west-2'});
-    const params = {
-        OutputFormat: "mp3", 
-        SampleRate: "8000", 
-        Text: req.body.text,
-        TextType: "text", 
-        VoiceId: "Joanna"
+app.get('/', async function (req, res) {
+    try {
+        const polly = new AWS.Polly({ apiVersion: '2016-06-10', region: 'us-west-2' });
+        console.log(req.query)
+        const params = {
+            OutputFormat: "mp3",
+            SampleRate: "8000",
+            Text: req.query.text,
+            TextType: "text",
+            VoiceId: req.query.voice
         };
-    const pollyResponse = await polly.synthesizeSpeech(params).promise();
-    res.writeHead(200, {
-        'Content-Type': 'audio/mp3',
-        'Content-disposistion': 'attachment;filename=hello.mp3',
-        'Content-Length': pollyResponse.AudioStream.length
-    });
-    res.end(pollyResponse.AudioStream)
+        const pollyResponse = await polly.synthesizeSpeech(params).promise();
+        res.writeHead(200, {
+            'Content-Type': 'audio/mp3',
+            'Content-disposistion': 'attachment;filename=hello.mp3',
+            'Content-Length': pollyResponse.AudioStream.length
+        });
+        res.end(pollyResponse.AudioStream)
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 });
 
 const port = process.env.PORT || 3000;
