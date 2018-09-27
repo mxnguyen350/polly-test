@@ -2,23 +2,63 @@ h3, h1, h2 {
     color: black;
     text-align: left;
 }
-h1 {
+
+h2 {
+    font-size: 28px;
+}
+
+#polly, #semantics, #syntax, #keyphrases {
     font-size: 60px;
+    margin-bottom: 10px;
+}
+
+#title {
+    font-size: 80px;
+    font-style: italic;
     border-bottom: 5px dotted black;
     position: sticky;
-} 
+}
+
 ol {
     color: blue;
 }
+
+li {
+    font-size: 25px;
+}
+
 body {
     background-image: url(http://blog.hostbaby.com/wp-content/uploads/2014/03/PaintSquares_1400x900-1024x658.jpg);
     background-size: cover;
     margin-left: 40px;
     margin-right: 40px;
-    margin-top: 100px;
+    margin-top: 90px;
 }
-img {
-    position: fixed;
-    right: 0;
-    bottom: 0;
+
+a {
+    background-color: antiquewhite;
+    padding: 7px;
+    border: 5px solid black;
+    font-size: 25px;
+}
+
+input {
+    width: 500px;
+    height: 50px;
+}
+
+.inputtext {
+    font-size: 22px;
+}
+
+.submit {
+    width: 300px;
+    height: 40px;
+    font-size: 25px;
+}
+
+select {
+    width: 220px;
+    height: 30px;
+    font-size: 22px;
 }

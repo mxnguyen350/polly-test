@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Text Semantics | Comprehend</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <nav class="navigation">
+        <a href='index_text_to_speech.html'>Text to speech</a>
+        <a href='index_semantics.html'>Identify semantics</a>
+        <a href='index_syntax.html'>Analyze syntax</a>
+        <a href='index_key_phrases.html'>Find key phrases</a>
+    </nav>
+    <h1 id="title">Text transformation and analysis services</h1>
+    <h1 id="syntax">Analyze the syntax of your text</h1>
+    <ol>
+        <li>Input your text into the specified field</li>
+        <li>Specify the language your text is written in</li>
+    </ol>
+    <form action="http://localhost:3000/syntax" method="GET">
+        <h2>Input text here</h2>
+        <input class="inputtext" type="text" name="analysisText" value="">
+        <br><br>
+        <h2>Specify the language of your text</h2>
+        <select name="languageCode">
+            <option value="en">English</option>
+        </select>
+        <br><br><br>
+        <input class="submit" type="submit" value="Analyze syntax">
+    </form>
+</body>

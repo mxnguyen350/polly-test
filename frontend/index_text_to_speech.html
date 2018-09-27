@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Text to speech | Polly</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <nav class="navigation">
+        <a href='index_text_to_speech.html'>Text to speech</a>
+        <a href='index_semantics.html'>Identify semantics</a>
+        <a href='index_syntax.html'>Analyze syntax</a>
+        <a href='index_key_phrases.html'>Find key phrases</a>
+    </nav>
+    <h1 id="title">Text transformation and analysis services</h1>
+    <h1 id="polly">Convert text to speech</h1>
+    <ol>
+        <li>Type your desired text</li>
+        <li>Choose the voice for your audio</li>
+        <li>Choose the format type of your audio file</li>
+        <li>Press the "Make Audio" buttin</li>
+    </ol>
+    <form action="http://localhost:3000/" method="GET">
+        <h2>Input text here</h2>
+        <input class="inputtext" type="text" name="text" value="">
+        <br><br>
+        <h2>Choose a voice</h2>
+        <select name="voice">
+            <option value="Joanna">Joanna, female</option>
+            <option value="Salli">Salli, female</option>
+            <option value="Kendra">Kendra, female</option>
+            <option value="Ivy">Ivy, female</option>
+            <option value="Matthew">Matthew, male</option>
+            <option value="Justin">Justin, male</option>
+            <option value="Joey">Joey, male</option>
+        </select>
+        <br><br>
+        <h2>Output format</h2>
+        <select name="format">
+            <!-- json and pcm are text files, so they need to be handled differently -->
+            <!-- <option value="json">json</option> -->
+            <option value="mp3">mp3</option>
+            <option value="ogg_vorbis">ogg vorbis</option>
+            <!-- <option value="pcm">pcm</option> -->
+        </select>
+        <br><br><br>
+        <input class="submit" type="submit" value="Make Audio">
+    </form>
+</body>
+
+</html>

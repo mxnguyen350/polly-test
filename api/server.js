@@ -22,12 +22,60 @@ app.get('/', async function (req, res) {
             'Content-disposistion': 'attachment;filename=hello.mp3',
             'Content-Length': pollyResponse.AudioStream.length
         });
-        res.end(pollyResponse.AudioStream)
+        res.end(pollyResponse.AudioStream);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
 });
+
+app.get('/semantics', async function (req, res) {
+    try {
+        const comprehend = new AWS.Comprehend({apiVersion: '2017-11-27', region: 'us-west-2'});
+        console.log(req.query)
+        const params = {
+            LanguageCode: req.query.languageCode,
+            Text: req.query.analysisText
+        };
+        const comprehendResponse = await comprehend.detectSentiment(params).promise();
+        res.send(comprehendResponse.Sentiment);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/syntax', async function (req, res) {
+    try {
+        const comprehend = new AWS.Comprehend({apiVersion: '2017-11-27', region: 'us-west-2'});
+        console.log(req.query);
+        const params = {
+            LanguageCode: req.query.languageCode,
+            Text: req.query.analysisText
+        };
+        const comprehendResponse = await comprehend.detectSyntax(params).promise();
+        res.send(comprehendResponse.SyntaxTokens);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/keyphrases', async function (req, res) {
+    try {
+        const comprehend = new AWS.Comprehend({apiVersion: '2017-11-27', region: 'us-west-2'});
+        console.log(req.query);
+        const params = {
+            LanguageCode: req.query.languageCode,
+            Text: req.query. analysisText
+        };
+        const comprehendResponse = await comprehend.detectKeyPhrases(params).promise();
+        res.send(comprehendResponse.KeyPhrases);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+})
 
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
