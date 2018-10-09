@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <title>Tanslate text | AWS Translate</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <nav class="navigation">
+        <a href='index_text_to_speech.html'>Text to speech</a>
+        <a href='index_semantics.html'>Identify semantics</a>
+        <a href='index_syntax.html'>Analyze syntax</a>
+        <a href='index_key_phrases.html'>Find key phrases</a>
+        <a href='index_translate.html'>Tanslate text</a>
+    </nav>
+    <h1 id="title">Text transformation and analysis services</h1>
+    <h1 id="syntax">Translate your text</h1>
+    <ol>
+        <li>Input your text into the specified field</li>
+        <li>Specify the language your text is written in</li>
+        <li>Specify the lanaguage you want to translate into</li>
+    </ol>
+    <form action="http://localhost:3000/translate" method="GET">
+        <h2 style="color:red">It is important to note that you can only translate from English to a supported lanaguage or from a supported langauage to English</h2>
+        <h2>Input text here</h2>
+        <input class="inputtext" type="text" name="analysisText" value="">
+        <br><br>
+        <h2>Specify the language of your text</h2>
+        <select name="languageCode">
+            <option value="en">English</option>
+            <option value="zh">Chinese (simplified)</option>
+            <option value="zh-TW">Chinese (traditional)</option>
+            <option value="ar">Arabic</option>
+            <option value="cs">Czech</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="ja">Japanese</option>
+            <option value="pt">Potuguese</option>
+            <option value="ru">Russian</option>
+            <option value="es">Spanish</option>
+            <option value="tr">Turkish</option>
+        </select>
+        <br><br>
+        <h2>Specify the language you want to translate to</h2>
+        <select name="translationLanguageCode">
+            <option value="en">English</option>
+            <option value="zh">Chinese (simplified)</option>
+            <option value="zh-TW">Chinese (traditional)</option>
+            <option value="ar">Arabic</option>
+            <option value="cs">Czech</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="it">Italian</option>
+            <option value="ja">Japanese</option>
+            <option value="pt">Potuguese</option>
+            <option value="ru">Russian</option>
+            <option value="es">Spanish</option>
+            <option value="tr">Turkish</option>
+        </select>
+        <br><br><br>
+        <input class="submit" type="submit" value="Translate text">
+    </form>
+</body>

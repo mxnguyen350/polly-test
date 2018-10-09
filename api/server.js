@@ -67,10 +67,27 @@ app.get('/keyphrases', async function (req, res) {
         console.log(req.query);
         const params = {
             LanguageCode: req.query.languageCode,
-            Text: req.query. analysisText
+            Text: req.query.analysisText
         };
         const comprehendResponse = await comprehend.detectKeyPhrases(params).promise();
         res.send(comprehendResponse.KeyPhrases);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+});
+
+app.get('/translate', async function (req, res) {
+    try {
+        const translate = new AWS.Translate({apiVersion: '2017-07-01', region: 'us-west-2'});
+        console.log(req.query);
+        const params = {
+            SourceLanguageCode: req.query.languageCode,
+            TargetLanguageCode: req.query.translationLanguageCode,
+            Text: req.query.analysisText
+        };
+        const translateResponse = await translate.translateText(params).promise();
+        res.send(translateResponse.TranslatedText);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
