@@ -1,0 +1,17 @@
+version: 1
+name: mxnguyen-pollyapi
+pipelines:
+  dev:
+    phases:
+    - type: github
+      name: Source
+      owner: byu-oit
+      repo: polly-test
+      branch: master
+    - type: codebuild
+      name: Build
+      build_image: aws/codebuild/nodejs:6.3.1
+    - type: handel
+      name: Deploy
+      environments_to_deploy:
+      - dev
