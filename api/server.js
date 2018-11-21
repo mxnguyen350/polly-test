@@ -1,11 +1,17 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
 const AWS = require('aws-sdk');
+const path = require('path')
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded())
 
 app.get('/', async function (req, res) {
+    const p = path.resolve(__dirname, '../frontend/index_text_to_speech.html')
+    res.sendFile(p)
+})
+
+app.get('/audio', async function (req, res) {
     try {
         const polly = new AWS.Polly({ apiVersion: '2016-06-10', region: 'us-west-2' });
         console.log(req.query)

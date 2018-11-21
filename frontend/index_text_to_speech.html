@@ -22,12 +22,12 @@
         <li>Choose the format type of your audio file</li>
         <li>Press the "Make Audio" buttin</li>
     </ol>
-    <form action="http://localhost:3000/" method="GET">
+    <form action="http://localhost:3000/audio" method="GET">
         <h2>Input text here</h2>
-        <input class="inputtext" type="text" name="text" value="">
+        <input id="voiceText" class="inputtext" type="text" name="text" value="">
         <br><br>
         <h2>Choose a voice</h2>
-        <select name="voice">
+        <select id="voice" name="voice">
             <option value="Joanna">Joanna, female</option>
             <option value="Salli">Salli, female</option>
             <option value="Kendra">Kendra, female</option>
@@ -38,7 +38,7 @@
         </select>
         <br><br>
         <h2>Output format</h2>
-        <select name="format">
+        <select id="outputFormat" name="format">
             <!-- json and pcm are text files, so they need to be handled differently. They also are not supported by Chrome. -->
             <!-- <option value="json">json</option> -->
             <option value="mp3">mp3</option>
@@ -46,8 +46,35 @@
             <!-- <option value="pcm">pcm</option> -->
         </select>
         <br><br><br>
-        <input class="submit" type="submit" value="Make Audio">
+        <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button>
+        <!-- <input class="submit" type="submit" value="Make Audio"> -->
     </form>
+    <script>
+        let desiredText
+        let desiredVoice
+        let desiredFormat
+        let urlForAudio
+        function addToAudioPlayer() {
+            function createUrl() {
+                desiredText = document.getElementById("voiceText");
+                desiredVoice = document.getElementById("voice");
+                desiredFormat = document.getElementById("outputFormat");
+                return urlForAudio = `http://localhost:3000/audio?text=${desiredText}&voice=${desiredVoice}&format=${desiredFormat}`;
+            }
+            function createFormat() {
+                desiredFormat = document.getElementById("outputFormat");
+                if (desiredFormat === "ogg_vorbis") {
+                    desiredFormat = "ogg"
+                }
+                const formatString = `audio/${desiredFormat}`
+                return formatString
+            }
+            const audioString = `<source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.`
+            document.getElementById("audio").innerHTML = audioString;
+        }
+    </script>
+    <br><br>
+    <audio controls id="audio" autoplay><source src="http://localhost:3000/audio?text=heloo+world&voice=Joanna&format=mp3" type="audio/mp3" />Your browser does not support the audio tag. </audio>
 </body>
 
 </html>
