@@ -11,6 +11,7 @@ app.get('/', async function (req, res) {
     res.sendFile(p)
 })
 
+// should I move this into my script of my index.html?
 app.get('/audio', async function (req, res) {
     try {
         const polly = new AWS.Polly({ apiVersion: '2016-06-10', region: 'us-west-2' });

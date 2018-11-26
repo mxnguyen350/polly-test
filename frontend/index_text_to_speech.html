@@ -3,16 +3,51 @@
 
 <head>
     <title>Text to speech | Polly</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!-- TODO - make this reference no longer local, so it can run on a server (no more local paths) -->
+    <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
 <body>
+    <script>
+        let desiredText
+        let desiredVoice
+        let desiredFormat
+        let urlForAudio
+        // the function below now runs, but it does not imput the new audio into the audio player
+        function addToAudioPlayer() {
+            // creates the url for the new audio
+            function createUrl() {
+                desiredText = document.getElementById("voiceText");
+                desiredVoice = document.getElementById("voice");
+                desiredFormat = document.getElementById("outputFormat");
+                return urlForAudio = `http://localhost:3000/audio?text=${desiredText}&voice=${desiredVoice}&format=${desiredFormat}`;
+            }
+            // changes the ogg_vorbis name to ogg, to fit the requirements of audio in html
+            function createFormat() {
+                desiredFormat = document.getElementById("outputFormat");
+                if (desiredFormat === "ogg_vorbis") {
+                    desiredFormat = "ogg"
+                }
+                const formatString = `audio/${desiredFormat}`
+                return formatString
+            }
+            // run the created functions
+            createUrl();
+            createFormat();
+            // const audioString = "<source src=\"" + urlForAudio + "\" type=\"" + formatString + "\" />Your browser does not support the audio tag."
+            const audioString = `<source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.`
+            // replaces the audio controls with the new audio
+            // this is not replacing the audio element. It still thinks that it is searching for the default url
+            document.getElementById("audio").innerHTML = audioString;
+        }
+    </script>
     <nav class="navigation">
-        <a href='index_text_to_speech.html'>Text to speech</a>
-        <a href='index_semantics.html'>Identify semantics</a>
-        <a href='index_syntax.html'>Analyze syntax</a>
-        <a href='index_key_phrases.html'>Find key phrases</a>
-        <a href='index_translate.html'>Tanslate text</a>
+        <!-- TODO - make these reference no longer local, so it can run on a server (no more local paths) -->
+        <a href='./index_text_to_speech.html'>Text to speech</a>
+        <a href='./index_semantics.html'>Identify semantics</a>
+        <a href='./index_syntax.html'>Analyze syntax</a>
+        <a href='./index_key_phrases.html'>Find key phrases</a>
+        <a href='./index_translate.html'>Tanslate text</a>
     </nav>
     <h1 id="title">Text transformation and analysis services</h1>
     <h1 id="polly">Convert text to speech</h1>
@@ -46,35 +81,14 @@
             <!-- <option value="pcm">pcm</option> -->
         </select>
         <br><br><br>
-        <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button>
-        <!-- <input class="submit" type="submit" value="Make Audio"> -->
+        <!-- <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button> -->
+        <input class="submit" type="submit" value="Make Audio">
     </form>
-    <script>
-        let desiredText
-        let desiredVoice
-        let desiredFormat
-        let urlForAudio
-        function addToAudioPlayer() {
-            function createUrl() {
-                desiredText = document.getElementById("voiceText");
-                desiredVoice = document.getElementById("voice");
-                desiredFormat = document.getElementById("outputFormat");
-                return urlForAudio = `http://localhost:3000/audio?text=${desiredText}&voice=${desiredVoice}&format=${desiredFormat}`;
-            }
-            function createFormat() {
-                desiredFormat = document.getElementById("outputFormat");
-                if (desiredFormat === "ogg_vorbis") {
-                    desiredFormat = "ogg"
-                }
-                const formatString = `audio/${desiredFormat}`
-                return formatString
-            }
-            const audioString = `<source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.`
-            document.getElementById("audio").innerHTML = audioString;
-        }
-    </script>
     <br><br>
-    <audio controls id="audio" autoplay><source src="http://localhost:3000/audio?text=heloo+world&voice=Joanna&format=mp3" type="audio/mp3" />Your browser does not support the audio tag. </audio>
+    <!-- this immediately calls the polly api -->
+    <audio controls id="audio" autoplay>
+        <source src="http://localhost:3000/audio?text=heloo+world&voice=Joanna&format=mp3" type="audio/mp3" />Your
+        browser does not support the audio tag. </audio>
 </body>
 
 </html>
