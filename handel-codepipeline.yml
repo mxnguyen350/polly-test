@@ -15,3 +15,9 @@ pipelines:
       name: Deploy
       environments_to_deploy:
       - dev
+    # - type: runscope
+    #   name: test-runscope
+    # - type: slack_notify
+    #   name: test-slack-notify
+    #   message: "The test slack notify works"
+    #   channel: "@mxnguyen"
