@@ -1,106 +1,74 @@
 <!DOCTYPE html>
-<html lang="en-US">
 
 <head>
-    <script src="../vue.js"></script>
+    <script src="vue.js"></script>
     <title>Text to speech | Polly</title>
-    <!-- TODO - make this reference no longer local, so it can run on a server (no more local paths) -->
     <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
+
+<body>
+    <div id="app">
+        <nav class="navigation">
+            <a href='./index_text_to_speech.html'>Text to speech</a>
+            <a href='./index_semantics.html'>Identify semantics</a>
+            <a href='./index_syntax.html'>Analyze syntax</a>
+            <a href='./index_key_phrases.html'>Find key phrases</a>
+            <a href='./index_translate.html'>Tanslate text</a>
+        </nav>
+        <h1 id="title">Text transformation and analysis services</h1>
+        <h1 id="polly">Convert text to speech</h1>
+        <ol>
+            <li>Type your desired text</li>
+            <li>Choose the voice for your audio</li>
+            <li>Choose the format type of your audio file</li>
+            <li>Press the "Make Audio" buttin</li>
+        </ol>
+        <form action="http://localhost:3000/audio" method="GET">
+            <h2>Input text here</h2>
+            <input id="voiceText" class="inputtext" type="text" name="text" value="" v-model="desiredText">
+            <br><br>
+            <h2>Choose a voice</h2>
+            <select id="voice" name="voice" v-model="desiredVoice">
+                <option value="Joanna">Joanna, female</option>
+                <option value="Salli">Salli, female</option>
+                <option value="Kendra">Kendra, female</option>
+                <option value="Ivy">Ivy, female</option>
+                <option value="Matthew">Matthew, male</option>
+                <option value="Justin">Justin, male</option>
+                <option value="Joey">Joey, male</option>
+            </select>
+            <br><br>
+            <h2>Output format</h2>
+            <select id="outputFormat" name="format" v-model="desiredFormat">
+                <!-- json and pcm are text files, so they need to be handled differently. They also are not supported by Chrome. -->
+                <!-- <option value="json">json</option> -->
+                <option value="mp3">mp3</option>
+                <option value="ogg_vorbis">ogg vorbis</option>
+                <!-- <option value="pcm">pcm</option> -->
+            </select>
+            <br><br><br>
+            <button id="submitAudio" type="button" @click="changeAudioLink">Make Audio</button>
+        </form>
+        <br><br>
+        <div id="audio" v-html="audioLink"></div>
+    </div>
+</body>
 
 <script>
     new Vue({
         el: "#app",
+        data: {
+            audioLink: '<audio controls><source src="" type="audio/mp3" />Your browser does not support the audio tag. </audio>',
+            desiredText: "",
+            desiredVoice: "",
+            desiredFormat: ""
+        },
         methods: {
-
+            changeAudioLink: function () {
+                const formatString = this.desiredFormat == 'ogg_vorbis' ? `audio/ogg` : `audio/${this.desiredFormat}`;
+                const urlForAudio = `http://localhost:3000/audio?text=${this.desiredText}&voice=${this.desiredVoice}&format=${this.desiredFormat}`;
+                return this.audioLink = `<audio controls autoplay><source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.</audio>`
+            }
         }
     })
 </script>
-
-<body id="app">
-    <script>
-        let desiredText
-        let desiredVoice
-        let desiredFormat
-        let urlForAudio
-        // the function below now runs, but it does not imput the new audio into the audio player
-        function addToAudioPlayer() {
-            console.log('This was called');
-            // creates the url for the new audio
-            function createUrl() {
-                desiredText = document.getElementById("voiceText");
-                desiredText = desiredText.value.replace(" ", "+");
-                desiredVoice = document.getElementById("voice").value;
-                desiredFormat = document.getElementById("outputFormat").value;
-                return urlForAudio = `http://localhost:3000/audio?text=${desiredText}&voice=${desiredVoice}&format=${desiredFormat}`;
-            }
-            // changes the ogg_vorbis name to ogg, to fit the requirements of audio in html
-            function createFormat() {
-                desiredFormat = document.getElementById("outputFormat").value;
-                if (desiredFormat === "ogg_vorbis") {
-                    desiredFormat = "ogg"
-                }
-                const formatString = `audio/${desiredFormat}`
-                return formatString
-            }
-            // run the created functions
-            createUrl();
-            const formatString = createFormat();
-            // const audioString = "<source src=\"" + urlForAudio + "\" type=\"" + formatString + "\" />Your browser does not support the audio tag."
-            const audioString = `<audio controls autoplay><source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.</audio>`
-            document.getElementById("audio").innerHTML = audioString;
-        }
-    </script>
-    <nav class="navigation">
-        <!-- TODO - make these reference no longer local, so it can run on a server (no more local paths) -->
-        <a href='./index_text_to_speech.html'>Text to speech</a>
-        <a href='./index_semantics.html'>Identify semantics</a>
-        <a href='./index_syntax.html'>Analyze syntax</a>
-        <a href='./index_key_phrases.html'>Find key phrases</a>
-        <a href='./index_translate.html'>Tanslate text</a>
-    </nav>
-    <h1 id="title">Text transformation and analysis services</h1>
-    <h1 id="polly">Convert text to speech</h1>
-    <ol>
-        <li>Type your desired text</li>
-        <li>Choose the voice for your audio</li>
-        <li>Choose the format type of your audio file</li>
-        <li>Press the "Make Audio" buttin</li>
-    </ol>
-    <form action="http://localhost:3000/audio" method="GET">
-        <h2>Input text here</h2>
-        <input id="voiceText" class="inputtext" type="text" name="text" value="">
-        <br><br>
-        <h2>Choose a voice</h2>
-        <select id="voice" name="voice">
-            <option value="Joanna">Joanna, female</option>
-            <option value="Salli">Salli, female</option>
-            <option value="Kendra">Kendra, female</option>
-            <option value="Ivy">Ivy, female</option>
-            <option value="Matthew">Matthew, male</option>
-            <option value="Justin">Justin, male</option>
-            <option value="Joey">Joey, male</option>
-        </select>
-        <br><br>
-        <h2>Output format</h2>
-        <select id="outputFormat" name="format">
-            <!-- json and pcm are text files, so they need to be handled differently. They also are not supported by Chrome. -->
-            <!-- <option value="json">json</option> -->
-            <option value="mp3">mp3</option>
-            <option value="ogg_vorbis">ogg vorbis</option>
-            <!-- <option value="pcm">pcm</option> -->
-        </select>
-        <br><br><br>
-        <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button>
-        <!-- <input class="submit" type="submit" value="Make Audio"> -->
-    </form>
-    <br><br>
-    <!-- this immediately calls the polly api -->
-    <div id="audio">
-        <audio controls>
-            <source src="" type="audio/mp3" />Your
-            browser does not support the audio tag. </audio>
-    </div>
-</body>
-
-</html>
