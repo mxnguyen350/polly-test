@@ -2,12 +2,22 @@
 <html lang="en-US">
 
 <head>
+    <script src="../vue.js"></script>
     <title>Text to speech | Polly</title>
     <!-- TODO - make this reference no longer local, so it can run on a server (no more local paths) -->
     <link rel="stylesheet" type="text/css" href="./style.css">
 </head>
 
-<body>
+<script>
+    new Vue({
+        el: "#app",
+        methods: {
+
+        }
+    })
+</script>
+
+<body id="app">
     <script>
         let desiredText
         let desiredVoice
@@ -15,16 +25,18 @@
         let urlForAudio
         // the function below now runs, but it does not imput the new audio into the audio player
         function addToAudioPlayer() {
+            console.log('This was called');
             // creates the url for the new audio
             function createUrl() {
                 desiredText = document.getElementById("voiceText");
-                desiredVoice = document.getElementById("voice");
-                desiredFormat = document.getElementById("outputFormat");
+                desiredText = desiredText.value.replace(" ", "+");
+                desiredVoice = document.getElementById("voice").value;
+                desiredFormat = document.getElementById("outputFormat").value;
                 return urlForAudio = `http://localhost:3000/audio?text=${desiredText}&voice=${desiredVoice}&format=${desiredFormat}`;
             }
             // changes the ogg_vorbis name to ogg, to fit the requirements of audio in html
             function createFormat() {
-                desiredFormat = document.getElementById("outputFormat");
+                desiredFormat = document.getElementById("outputFormat").value;
                 if (desiredFormat === "ogg_vorbis") {
                     desiredFormat = "ogg"
                 }
@@ -33,11 +45,9 @@
             }
             // run the created functions
             createUrl();
-            createFormat();
+            const formatString = createFormat();
             // const audioString = "<source src=\"" + urlForAudio + "\" type=\"" + formatString + "\" />Your browser does not support the audio tag."
-            const audioString = `<source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.`
-            // replaces the audio controls with the new audio
-            // this is not replacing the audio element. It still thinks that it is searching for the default url
+            const audioString = `<audio controls autoplay><source src="${urlForAudio}" type="${formatString}" />Your browser does not support the audio tag.</audio>`
             document.getElementById("audio").innerHTML = audioString;
         }
     </script>
@@ -81,14 +91,16 @@
             <!-- <option value="pcm">pcm</option> -->
         </select>
         <br><br><br>
-        <!-- <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button> -->
-        <input class="submit" type="submit" value="Make Audio">
+        <button id="submitAudio" type="button" onclick="addToAudioPlayer()">Make Audio</button>
+        <!-- <input class="submit" type="submit" value="Make Audio"> -->
     </form>
     <br><br>
     <!-- this immediately calls the polly api -->
-    <audio controls id="audio" autoplay>
-        <source src="http://localhost:3000/audio?text=heloo+world&voice=Joanna&format=mp3" type="audio/mp3" />Your
-        browser does not support the audio tag. </audio>
+    <div id="audio">
+        <audio controls>
+            <source src="" type="audio/mp3" />Your
+            browser does not support the audio tag. </audio>
+    </div>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
-const app = require('express')();
+const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const AWS = require('aws-sdk');
 const path = require('path')
@@ -9,7 +10,9 @@ app.use(bodyParser.urlencoded())
 app.get('/', async function (req, res) {
     const p = path.resolve(__dirname, '../frontend/index_text_to_speech.html')
     res.sendFile(p)
-})
+});
+
+app.use(express.static(path.resolve(__dirname, '../frontend')));
 
 // should I move this into my script of my index.html?
 app.get('/audio', async function (req, res) {

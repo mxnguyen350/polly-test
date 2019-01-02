@@ -11,6 +11,8 @@ pipelines:
     - type: codebuild
       name: Build
       build_image: aws/codebuild/nodejs:6.3.1
+    - type: approval
+      name: test-approval-phase
     - type: handel
       name: Deploy
       environments_to_deploy:
